@@ -22,7 +22,7 @@ public class GuiBoard extends board{
             double sizeD = size;
 	    if(size>10)
 	    {
-	    	StdDraw.setCanvasSize((512+(size-10)*50), (int)((512+(size-10)*50)*(1+(1/2*sizeD))), "Lines of Action");
+	    	StdDraw.setCanvasSize((512+(size-10)*50), (int)((512+(size-10)*50)), "Lines of Action");
 	    }
 	    else{
 	    	StdDraw.setCanvasSize(512, (int)(512*(1+(1/2*sizeD))), "Lines of Action");

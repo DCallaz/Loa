@@ -1,4 +1,5 @@
 
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class Loa
@@ -52,7 +53,19 @@ public class Loa
               new single(size, true);
           break;
         }
-        int temp = JOptionPane.showConfirmDialog(null, "Would you like to play another game?", "Play again", JOptionPane.YES_NO_OPTION);
+        int temp = 0;
+        if(mode>2)
+        {
+            temp = JOptionPane.showConfirmDialog(null, "Would you like to play another game?", "Play again", JOptionPane.YES_NO_OPTION);
+        }
+        else
+        {
+            System.out.println("Would you like to play another game? (Y or N)");
+            Scanner sc = new Scanner(System.in);
+            String s = sc.next();
+            if(s.equals("Y")){temp = 0;}
+            else{temp=1;}
+        }
         exit = !(temp == 0);
     }
     System.exit(0);

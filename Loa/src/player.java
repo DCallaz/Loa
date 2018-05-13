@@ -118,7 +118,7 @@ public class player
   public boolean group()//start function of connected check
   {
     groupCount = 1;
-    checked = "0 ";
+    checked = " 0 ";
     //starts the outcheck procedure at the first piece (id=0)
     if(outcheck(new int[] {piece(0)[1],piece(0)[0]}) == true)
     {
@@ -140,7 +140,7 @@ public class player
       for(int ychange=1; ychange>-2; ychange--)//y values around pieces
       {
         int y = pos[1]+ychange;
-        if(occupied(x,y) != -1 && !checked.contains(occupied(x,y)+""))
+        if(occupied(x,y) != -1 && !checked.contains(" "+occupied(x,y)+" "))
         {
           groupCount++;//adds 1 to pieces in the group
           checked += occupied(x,y)+" ";//adds the piece checked pieces
