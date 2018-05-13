@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,8 +52,9 @@ public class single
   
   private static void singleGame(int size, boolean colour, player[] p, board b, String player, int pass, boolean Gui)
   {
-	boolean endgame = false;
-	int i=0,j=1,add=1;//variables for alternating move
+    boolean shown = false;//stores if text for move has been shown
+    boolean endgame = false;
+    int i=0,j=1,add=1;//variables for alternating move
     if(colour == true)
     {
       i=1;
@@ -64,6 +67,7 @@ public class single
       {
        if(checks.pass(p[i], p[j], size, b) == false)//checks if player must pass
        {
+        shown = false;
         int[][] move = null;
         while(move == null)
         {
@@ -78,11 +82,23 @@ public class single
             }
             else
             {
+                if(shown == false)
+                {
+                    StdDraw.setPenColor(Color.BLACK);
+                    StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
+                    StdDraw.text(5, size*10+2.5, "Your move");
+                    StdDraw.show(0);
+                    shown = true;
+                }
             	move = GuiMove(size, p[i], p[j], b);
             }
           }
           else
           {
+            if(shown == false)
+            {
+              shown = true;
+            }
             move = compmove(size, p[i], p[j], b);//chose and check move
           }
           
@@ -90,6 +106,13 @@ public class single
           {
 	         System.out.print(b.toString());//print board
 	         if(Gui == false) {System.out.println();}
+                 else
+                 {
+                    StdDraw.setPenColor(Color.BLACK);
+                    StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
+                    StdDraw.text(7, size*10+2.5, "Opponents move");
+                    StdDraw.show(0);
+                 }
 	         //delay output to show that computer moves
 	         try
 	         {
@@ -100,22 +123,25 @@ public class single
 	                                                              null, ex);
 	         }//
 	         //print computers move
-	          System.out.print("Computer Moves: ");
-	          for(int m1 =0; m1<2; m1++)
-	          {
-	            for(int m2=0; m2<2; m2++)
-	            {
-	              if(m2 == 0)
-	              {
-	                System.out.print((char)((size-1-move[m1][m2])+(int)('A')));
-	              }
-	              else
-	              {
-	                System.out.print((char)(move[m1][m2]+(int)('A')));
-	              }
-	            }
-	          }
-	        	  System.out.println();
+                 if(Gui == false)
+                 {
+                    System.out.print("Computer Moves: ");
+                    for(int m1 =0; m1<2; m1++)
+                    {
+                      for(int m2=0; m2<2; m2++)
+                      {
+                        if(m2 == 0)
+                        {
+                          System.out.print((char)((size-1-move[m1][m2])+(int)('A')));
+                        }
+                        else
+                        {
+                          System.out.print((char)(move[m1][m2]+(int)('A')));
+                        }
+                      }
+                    }
+                    System.out.println();
+                 }
 	         //
           }
         }
@@ -144,7 +170,7 @@ public class single
             	JOptionPane.showMessageDialog(null, winner);
             }
             endgame = true;
-            System.exit(0);
+            i = 3;
           }
           //
        }
@@ -162,7 +188,7 @@ public class single
         	  JOptionPane.showMessageDialog(null, "DRAW", "Draw", JOptionPane.INFORMATION_MESSAGE);
           }
           endgame = true;
-          System.exit(0);
+          i = 3;
         }
         if(i == 0)
         {
@@ -257,25 +283,29 @@ public class single
 	 {
 		 if(StdDraw.mousePressed() == true)
 		 {
-			 int tempx = (int)(StdDraw.mouseX()/10);
-			 int tempy = (int)(StdDraw.mouseY()/10);
-			 if((x != tempx || y != tempy) && tempx>-1 && tempy<size)
-			 {
-				 if((count == 0 && pAcc.occupied((size-1)-tempy,tempx) != -1) || (count == 1))
-				 {
-					 x = tempx;
-					 y = tempy;
-					 move[count][1] = x;
-					 move[count][0] = y;
-				 
-					 pAcc.toggleColour();
-					 StdDraw.filledCircle(move[count][1]*10+5, move[count][0]*10+5, 4.5);
-					 StdDraw.show(0);
-					 count++;
-					 StdDraw.mouseRelease();
-				 }
-			 }
-			 
+                    int tempx = (int)(StdDraw.mouseX()/10);
+                    int tempy = (int)(StdDraw.mouseY()/10);
+                    if((x != tempx || y != tempy) && tempx>-1 && tempy<size)
+                    {
+                            if((count == 0 && pAcc.occupied((size-1)-tempy,tempx) != -1) || (count == 1))
+                            {
+                                    x = tempx;
+                                    y = tempy;
+                                    move[count][1] = x;
+                                    move[count][0] = y;
+
+                                    pAcc.toggleColour();
+                                    StdDraw.filledCircle(move[count][1]*10+5, move[count][0]*10+5, 4.5);
+                                    StdDraw.show(0);
+                                    count++;
+                                    StdDraw.mouseRelease();
+                            }
+                    }
+                    if(StdDraw.mouseX()>(size*10-4) && StdDraw.mouseY()>(10*(size+1)-7))
+                    {
+                        JOptionPane.showMessageDialog(null,"Thank you for playing","Player quit", JOptionPane.PLAIN_MESSAGE);
+                        System.exit(0);
+                    }
 		 }
 	 }
  

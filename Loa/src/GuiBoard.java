@@ -1,5 +1,4 @@
 import java.awt.Font;
-
 public class GuiBoard extends board{
 	
 	public final int RADIUS = 5;
@@ -20,82 +19,80 @@ public class GuiBoard extends board{
 	      this.p2 = p1;
 	    }
 	    reset();
+            double sizeD = size;
 	    if(size>10)
 	    {
-	    	StdDraw.setCanvasSize(512+(size-10)*50, 512+(size-10)*50);
+	    	StdDraw.setCanvasSize((512+(size-10)*50), (int)((512+(size-10)*50)*(1+(1/2*sizeD))), "Lines of Action");
 	    }
 	    else{
-	    	StdDraw.init("Lines of Action");
+	    	StdDraw.setCanvasSize(512, (int)(512*(1+(1/2*sizeD))), "Lines of Action");
 	    }
-	    StdDraw.setXscale(-10, size*10);
-	    StdDraw.setYscale(0, size*10+10);
+	    StdDraw.setXscale(0, size*10);
+	    StdDraw.setYscale(0, size*10+5);
 	}
 	
 	public String toString()
 	{
 		//set & reset variables and board
 	    String temp = "";
-        int max = 10*(size+1);
-        int diameter = 2*RADIUS;
-        StdDraw.setPenRadius(0.01);
-        //
-        StdDraw.show(0);
-        
-        //draw background squares
-        for(int i=-1; i<max; i++)
-        {
-        	for(int j=0; j<max; j++)
-        	{
-        		if(Math.abs(i+j)%2 == 1)
-        		{
-        			StdDraw.setPenColor(StdDraw.BROWN);
-        			StdDraw.filledSquare(i*10+RADIUS, j*10+RADIUS, RADIUS);
-        		}
-        		else
-        		{
-        			StdDraw.setPenColor(StdDraw.DARK_BROWN);
-        			StdDraw.filledSquare(i*10+RADIUS, j*10+RADIUS, RADIUS);
-        		}
-        	}
-        }
-        
-        
-        //draw row/col headers
-        StdDraw.setPenColor(StdDraw.BLACK);
-        StdDraw.setFont(new Font("SansSerif", Font.BOLD, 16+(16-size)));
-        int count = 0;
-        for(char c = 'A'; c != (char)((int)('A')+size); c = (char)((int)(c)+1))
-        {
-          StdDraw.text(-10+RADIUS, count*10+RADIUS, c+"");
-          count++;
-        }
-        count=0;
-        for(char c = 'A'; c != (char)((int)('A')+size); c = (char)((int)(c)+1))
-        {
-          StdDraw.text(count*10+RADIUS,max-RADIUS , c+"");
-          count++;
-        }
-        //
-        
-        //draw pieces
-        for(int i=0; i<size; i++)
-        {
-          for(int j=0;j<size; j++)
-          {
-            if(tile[i][j].equals("B"))
+            int max = 10*(size+1);
+            int diameter = 2*RADIUS;
+            StdDraw.setPenRadius(0.01);
+            //
+            StdDraw.show(0);
+
+            //draw background squares
+            for(int i=0; i<size; i++)
             {
-            	StdDraw.setPenColor(StdDraw.BLACK);
-                StdDraw.filledCircle(j*diameter+RADIUS,(max-10)-(i*diameter+RADIUS), RADIUS-0.5);
+                for(int j=0; j<size; j++)
+                {
+                    if(Math.abs(i+j)%2 == 1)
+                    {
+                            StdDraw.setPenColor(StdDraw.BROWN);
+                            StdDraw.filledSquare(i*10+RADIUS, j*10+RADIUS, RADIUS);
+                    }
+                    else
+                    {
+                            StdDraw.setPenColor(StdDraw.DARK_BROWN);
+                            StdDraw.filledSquare(i*10+RADIUS, j*10+RADIUS, RADIUS);
+                    }
+                }
             }
-            else if(tile[i][j].equals("W"))
+            //
+
+            //draw top elements
+            StdDraw.setPenColor(StdDraw.BLACK);
+            StdDraw.line(0, size*10, size*10, size*10);
+            StdDraw.setPenColor(230, 204, 179);
+            StdDraw.filledRectangle((size/2)*10, size*10+RADIUS, (size/2)*10, RADIUS);
+                //draw close button
+                StdDraw.setFont();
+                StdDraw.setPenColor(StdDraw.RED);
+                StdDraw.filledRectangle((size*10)-2, max-6, 2, 1);
+                StdDraw.setPenColor(StdDraw.BLACK);
+                StdDraw.text((size*10)-2, max-6, "Close");
+                //
+            //
+
+            //draw pieces
+            for(int i=0; i<size; i++)
             {
-            	StdDraw.setPenColor(StdDraw.BOOK_RED);
-                StdDraw.filledCircle(j*diameter+RADIUS,(max-10)-(i*diameter+RADIUS), RADIUS-0.5);
+              for(int j=0;j<size; j++)
+              {
+                if(tile[i][j].equals("B"))
+                {
+                    StdDraw.setPenColor(StdDraw.BLACK);
+                    StdDraw.filledCircle(j*diameter+RADIUS,(max-10)-(i*diameter+RADIUS), RADIUS-0.5);
+                }
+                else if(tile[i][j].equals("W"))
+                {
+                    StdDraw.setPenColor(StdDraw.BOOK_RED);
+                    StdDraw.filledCircle(j*diameter+RADIUS,(max-10)-(i*diameter+RADIUS), RADIUS-0.5);
+                }
+              }
             }
-          }
+            //
+            StdDraw.show(0);
+            return temp;
         }
-        //
-        StdDraw.show(0);
-        return temp;
-	}
 }

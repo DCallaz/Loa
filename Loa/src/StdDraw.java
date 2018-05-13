@@ -68,7 +68,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     public static final Color WHITE      = Color.WHITE;
     public static final Color YELLOW     = Color.YELLOW;
     public static final Color BROWN 	 = Color.getHSBColor(26.09f, 31f, 66.27f);
-    public static final Color DARK_BROWN = new Color(102,63,33);
+    public static final Color DARK_BROWN = new Color(198, 138, 83);
     
     /**
      * Shade of blue used in Introduction to Programming in Java.
@@ -173,6 +173,22 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         width = w;
         height = h;
         init("");
+    }
+    
+    /**
+     * Set the window size to w-by-h pixels.
+     * This method must be called before any other commands.
+     *
+     * @param w the width as a number of pixels
+     * @param h the height as a number of pixels
+     * @param name the title for the Frame
+     * @throws a IllegalArgumentException if the width or height is 0 or negative
+     */
+    public static void setCanvasSize(int w, int h, String name) {
+        if (w < 1 || h < 1) throw new IllegalArgumentException("width and height must be positive");
+        width = w;
+        height = h;
+        init(name);
     }
 
     // init
