@@ -86,7 +86,7 @@ public class single
                 {
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
-                    StdDraw.text(5, size*10+2.5, "Your move");
+                    StdDraw.text(5+2*(size-4), size*10+(double)size/2, "Your move");
                     StdDraw.show(0);
                     shown = true;
                 }
@@ -110,7 +110,7 @@ public class single
                  {
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
-                    StdDraw.text(7, size*10+2.5, "Opponents move");
+                    StdDraw.text(7+2*(size-4), size*10+(double)size/2, "Opponents move");
                     StdDraw.show(0);
                  }
 	         //delay output to show that computer moves
@@ -301,7 +301,7 @@ public class single
                                     StdDraw.mouseRelease();
                             }
                     }
-                    if(StdDraw.mouseX()>(size*10-4) && StdDraw.mouseY()>(10*(size+1)-7))
+                    if(StdDraw.mouseX()>(size*10-(size)) && StdDraw.mouseY()>(10*size+size/2))
                     {
                         JOptionPane.showMessageDialog(null,"Thank you for playing","Player quit", JOptionPane.PLAIN_MESSAGE);
                         System.exit(0);
