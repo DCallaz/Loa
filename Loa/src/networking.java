@@ -47,6 +47,7 @@ public class networking {
 	private static DataOutputStream toPartner;
 
 	private static int mode;
+        private static int size;
 
   public networking(int size, String ip)
   {
@@ -74,12 +75,18 @@ public class networking {
 		} else {
 			System.out.println("Connection error");
 		}
+                this.size = size;
   }
 
 	public int getMode()
 	{
 		return mode;
 	}
+        
+        public int getsize()
+        {
+            return size;
+        }
 
 	/*
 	 * Determine the IP address of this machine.

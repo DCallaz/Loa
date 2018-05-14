@@ -6,6 +6,7 @@ public class multiplayer
   public multiplayer(int size, String ip)
   {
     net = new networking(size, ip);
+    size = net.getsize();
     boolean endgame = false;
     player[] p = new player[2];
     //assign colour
