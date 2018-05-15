@@ -46,7 +46,7 @@ public class networking {
 	private static BufferedReader fromPartner;
 	private static DataOutputStream toPartner;
 
-	private static int mode;
+/*	private static int mode;
         private static int size;
 
   public networking(int size, String ip)
@@ -82,11 +82,12 @@ public class networking {
 	{
 		return mode;
 	}
-        
-        public int getsize()
-        {
-            return size;
-        }
+
+  public int getsize()
+  {
+      return size;
+  }
+	*/
 
 	/*
 	 * Determine the IP address of this machine.
@@ -190,45 +191,6 @@ public class networking {
 			x.printStackTrace();
 		}
 	}
-
-//send move to partnered machine
-	public static void writeM(int[][] move)
-	{
-		String sMove = "";
-		for(int i=0; i<2; i++)
-		{
-			for(int j=0; j<2; j++)
-			{
-				sMove += move[i][j]+"#";
-			}
-		}
-		write(sMove);
-	}
-	//
-
-public static int[][] readM()
-{
-	String sMove = read();
-	String[] parts = sMove.split("#");
-	int[][] move = new int[2][2];
-	if(sMove.equals("QUIT"))
-	{
-		System.out.println("Opponent has quit");
-		close();
-		System.exit(0);
-	}
-	else{
-
-		for(int i=0; i<2; i++)
-		{
-			for(int j=0; j<2; j++)
-			{
-				move[i][j] = Integer.parseInt(parts[i*2+j]);
-			}
-		}
-	}
-	return move;
-}
 
 	/*
 	 * Wait for a message from the partnered machine.
