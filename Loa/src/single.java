@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class single
 {
-
+    
+  public static String printColour;
+    
   public single(int size, boolean Gui)
   {
     int pass = 0;
@@ -34,6 +36,7 @@ public class single
   		  player = "W";
   	  }
     }
+    printColour = (colour == true) ? "(White)" : "(Black)";
     //
     player[] p = new player[2];
     p[0] = new player(size, colour);//player
@@ -86,11 +89,11 @@ public class single
                 {
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
-                    StdDraw.text(5+2*(size-4), size*10+(double)size/2, "Your move");
+                    StdDraw.text(7+2*(size-4), size*10+(double)size/2, "Your move "+printColour);
                     StdDraw.show(0);
                     shown = true;
                 }
-            	move = checks.GuiMove(size, p[i], p[j], b);
+            	move = checks.GuiMove(size, p[i], p[j], b, false);
             }
           }
           else

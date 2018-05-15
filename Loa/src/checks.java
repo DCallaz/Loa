@@ -126,7 +126,7 @@ public class checks {
 	    return true;
 	  }
           
-        public static int[][] GuiMove(int size, player pAcc, player pDor, board b)
+        public static int[][] GuiMove(int size, player pAcc, player pDor, board b, boolean net)
         {
                int move[][] = new int[2][3];
                int count = 0;
@@ -157,7 +157,14 @@ public class checks {
                           if(StdDraw.mouseX()>(size*10-(size)) && StdDraw.mouseY()>(10*size+size/2))
                           {
                               JOptionPane.showMessageDialog(null,"Thank you for playing","Player quit", JOptionPane.PLAIN_MESSAGE);
-                              System.exit(0);
+                              if(net)
+                              {
+                                  return new int[][]{{-1}};
+                              }
+                              else
+                              {
+                                  System.exit(0);
+                              }
                           }
                        }
                }
