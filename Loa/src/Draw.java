@@ -15,7 +15,7 @@ public class Draw {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        StdDraw.init("");
+        StdDraw.init();
         int size = 0;
         while(size<4 || size>16)
         {

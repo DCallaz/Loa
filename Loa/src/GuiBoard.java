@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Font;
 public class GuiBoard extends board{
 	
@@ -20,7 +21,7 @@ public class GuiBoard extends board{
 	    }
 	    reset();
             double sizeD = size;
-	    StdDraw.setCanvasSize(512, (int)(512*(1+(1/8))), "Lines of Action");
+	    StdDraw.setCanvasSize(512, (int)(512*(1+(1/8))));
 	    StdDraw.setXscale(0, size*10);
 	    StdDraw.setYscale(0, size*10+size);
 	}
@@ -43,12 +44,12 @@ public class GuiBoard extends board{
                 {
                     if(Math.abs(i+j)%2 == 1)
                     {
-                            StdDraw.setPenColor(StdDraw.BROWN);
+                            StdDraw.setPenColor(Color.getHSBColor(26.09f, 31f, 66.27f));
                             StdDraw.filledSquare(i*10+RADIUS, j*10+RADIUS, RADIUS);
                     }
                     else
                     {
-                            StdDraw.setPenColor(StdDraw.DARK_BROWN);
+                            StdDraw.setPenColor(new Color(198, 138, 83));
                             StdDraw.filledSquare(i*10+RADIUS, j*10+RADIUS, RADIUS);
                     }
                 }

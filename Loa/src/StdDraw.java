@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /*************************************************************************
  *  Compilation:  javac StdDraw.java
  *  Execution:    java StdDraw
@@ -67,9 +62,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     public static final Color RED        = Color.RED;
     public static final Color WHITE      = Color.WHITE;
     public static final Color YELLOW     = Color.YELLOW;
-    public static final Color BROWN 	 = Color.getHSBColor(26.09f, 31f, 66.27f);
-    public static final Color DARK_BROWN = new Color(198, 138, 83);
-    
+
     /**
      * Shade of blue used in Introduction to Programming in Java.
      * It is Pantone 300U. The RGB values are approximately (9, 90, 166).
@@ -172,32 +165,12 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         if (w < 1 || h < 1) throw new IllegalArgumentException("width and height must be positive");
         width = w;
         height = h;
-        init("");
-    }
-    
-    /**
-     * Set the window size to w-by-h pixels.
-     * This method must be called before any other commands.
-     *
-     * @param w the width as a number of pixels
-     * @param h the height as a number of pixels
-     * @param name the title for the Frame
-     * @throws a IllegalArgumentException if the width or height is 0 or negative
-     */
-    public static void setCanvasSize(int w, int h, String name) {
-        if (w < 1 || h < 1) throw new IllegalArgumentException("width and height must be positive");
-        width = w;
-        height = h;
-        init(name);
+        init();
     }
 
     // init
-    public static void init(String name) {
-        if(name.equals(""))
-        {
-        	name = "Standard Draw";
-        }
-    	if (frame != null) frame.setVisible(false);
+    public static void init() {
+        if (frame != null) frame.setVisible(false);
         frame = new JFrame();
         offscreenImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         onscreenImage  = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -231,7 +204,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);            // closes all windows
         // frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);      // closes only current window
-        frame.setTitle(name);
+        frame.setTitle("Standard Draw");
         frame.setJMenuBar(createMenuBar());
         frame.pack();
         frame.requestFocusInWindow();
@@ -974,8 +947,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         }
     }
     
-    public static void mouseRelease() {
-    	mousePressed = false;
+    public static void mouseRelease(){
+        synchronized (mouseLock) {
+             mousePressed = false;
+        }
     }
 
     /**
