@@ -1,9 +1,12 @@
 
+import java.awt.Color;
+import java.awt.Font;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 public class multiplayer
 {
   private static networking net;
-  public multiplayer(int size, String ip)
+  public multiplayer(int size, String ip, boolean Gui)
   {
     net = new networking();
     int mode = 0;
@@ -29,7 +32,7 @@ public class multiplayer
 			System.out.println("Size received: "+size);
 		} else {
 			System.out.println("Connection error");
-      System.exit(0);
+                        System.exit(0);
 		}
     boolean endgame = false;
     player[] p = new player[2];
@@ -50,7 +53,15 @@ public class multiplayer
 
     p[0] = new player(size, colour);
     p[1] = new player(size, !colour);
-    board b = new board(size, p[0], p[1]);
+    board b;
+    if(Gui)
+    {
+        b = new GuiBoard(size, p[0], p[1]);
+    }
+    else
+    {
+        b = new board(size, p[0], p[1]);
+    }
     while(endgame == false)//loop for the game
     {
     	//initialising counters
@@ -71,36 +82,64 @@ public class multiplayer
         {
           if(i == 0)//player moving
           {
-            System.out.println(b.toString());//print board
-            System.out.println("Your move:");
-            move = movereader(size, p[i], p[j], b);//Read and check move
+            if(Gui == false)
+            {
+                System.out.println(b.toString());//print board
+                System.out.println("Your move:");
+                move = movereader(size, p[i], p[j], b);//Read and check move
+            }
+            else
+            {
+                StdDraw.setPenColor(Color.BLACK);
+                StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
+                StdDraw.text(5+2*(size-4), size*10+(double)size/2, "Your move");
+                StdDraw.show(0);
+            	move = checks.GuiMove(size, p[i], p[j], b);
+            }
           }
           else//player waiting
           {
-        	System.out.println(b.toString());//print board
-            System.out.println("Wait for opponent to move...");
+            System.out.println(b.toString());//print board
+            if(Gui)
+            {
+                StdDraw.setPenColor(Color.BLACK);
+                StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
+                StdDraw.text(7+2*(size-4), size*10+(double)size/2, "Opponents move");
+                StdDraw.show(0);
+            }
+            else
+            {
+                System.out.println("Wait for opponent to move...");
+            }
             String sMove = net.read();
-          	String[] parts = sMove.split("");
+            String[] parts = sMove.split("");
             move = new int[2][2];
           	if(sMove.equals("QUIT"))
           	{
-          		System.out.println("Opponent has quit");
-          		net.close();
-          		System.exit(0);
+                    if(Gui)
+                    {
+                        JOptionPane.showMessageDialog(null, "Opponent has quit");
+                    }
+                    else
+                    {
+                        System.out.println("Opponent has quit");
+                    }
+                    net.close();
+                    System.exit(0);
           	}
-          	else{
-
-          		for(int x=0; x<2; x++)
-          		{
-          			for(int y=0; y<2; y++)
-          			{
-          				move[x][y] = (int)(parts[(x*2)+y].charAt(0))-(int)('A');
-                                        if(y == 0)
-                                        {
-                                          move[x][y] = (size-1)-move[x][y];
-                                        }
-          			}
-          		}
+          	else
+                {
+                    for(int x=0; x<2; x++)
+                    {
+                        for(int y=0; y<2; y++)
+                        {
+                            move[x][y] = (int)(parts[(x*2)+y].charAt(0))-(int)('A');
+                            if(y == 0)
+                            {
+                              move[x][y] = (size-1)-move[x][y];
+                            }
+                        }
+                    }
           	}
           }
         }
@@ -117,7 +156,14 @@ public class multiplayer
           if(winner != null)
           {
               System.out.println(b.toString());//print board
-              System.out.println(winner);
+              if(Gui)
+              {
+                  JOptionPane.showMessageDialog(null, winner);
+              }
+              else
+              {
+                System.out.println(winner);
+              }
               endgame = true;
               System.exit(0);
           }

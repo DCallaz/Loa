@@ -45,12 +45,17 @@ public class Loa
             }
             else{
               String ip = args[2];
-              new multiplayer(size, ip);
+              new multiplayer(size, ip, false);
             }
           break;
 
           case 3:
               new single(size, true);
+          break;
+          
+          case 4:
+              String ip = args[2];
+              new multiplayer(size, ip, true);
           break;
         }
         int temp = 0;

@@ -90,7 +90,7 @@ public class single
                     StdDraw.show(0);
                     shown = true;
                 }
-            	move = GuiMove(size, p[i], p[j], b);
+            	move = checks.GuiMove(size, p[i], p[j], b);
             }
           }
           else
@@ -269,70 +269,6 @@ public class single
     else
     {
       	  System.out.println("ERROR: invalid move");
-      return null;
-    }
-  }
-  
-  public static int[][] GuiMove(int size, player pAcc, player pDor, board b)
-  {
-	 int move[][] = new int[2][3];
-	 int count = 0;
-	 int x=-1, y =-1;
-	 
-	 while(count < 2)
-	 {
-		 if(StdDraw.mousePressed() == true)
-		 {
-                    int tempx = (int)(StdDraw.mouseX()/10);
-                    int tempy = (int)(StdDraw.mouseY()/10);
-                    if((x != tempx || y != tempy) && tempx>-1 && tempy<size)
-                    {
-                            if((count == 0 && pAcc.occupied((size-1)-tempy,tempx) != -1) || (count == 1))
-                            {
-                                    x = tempx;
-                                    y = tempy;
-                                    move[count][1] = x;
-                                    move[count][0] = y;
-
-                                    pAcc.toggleColour();
-                                    StdDraw.filledCircle(move[count][1]*10+5, move[count][0]*10+5, 4.5);
-                                    StdDraw.show(0);
-                                    count++;
-                                    StdDraw.mouseRelease();
-                            }
-                    }
-                    if(StdDraw.mouseX()>(size*10-(size)) && StdDraw.mouseY()>(10*size+size/2))
-                    {
-                        JOptionPane.showMessageDialog(null,"Thank you for playing","Player quit", JOptionPane.PLAIN_MESSAGE);
-                        System.exit(0);
-                    }
-		 }
-	 }
- 
-    //check place exists
-    for(int i=0; i<2; i++)
-    {
-      for(int j=0; j<2; j++)
-      {
-        if(j == 0)
-        {
-          move[i][j] = (size-1)-move[i][j];
-        }
-        if((move[i][j]+1) > size || (move[i][j])<0)
-        {
-          JOptionPane.showMessageDialog(null, "Invalid move", "ERROR", JOptionPane.ERROR_MESSAGE);
-          return null;
-        }
-      }
-    }//
- 
-    if(checks.movecheck(size,pAcc,pDor,b,move) != false)
-    {
-      return move;
-    }
-    else
-    {
-      JOptionPane.showMessageDialog(null, "Invalid move", "ERROR", JOptionPane.ERROR_MESSAGE);
       return null;
     }
   }
