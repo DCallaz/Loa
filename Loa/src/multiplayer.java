@@ -95,10 +95,10 @@ public class multiplayer
           			for(int y=0; y<2; y++)
           			{
           				move[x][y] = (int)(parts[(x*2)+y].charAt(0))-(int)('A');
-                  if(y == 0)
-                  {
-                    move[i][j] = (size-1)-move[i][j];
-                  }
+                                        if(y == 0)
+                                        {
+                                          move[x][y] = (size-1)-move[x][y];
+                                        }
           			}
           		}
           	}
