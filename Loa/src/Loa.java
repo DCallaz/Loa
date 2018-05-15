@@ -22,7 +22,7 @@ public class Loa
           System.exit(0);
         }
 
-        if(mode < 0 || mode > 3)//check mode valid
+        if(mode < 0 || mode > 4)//check mode valid
         {
           System.out.println("ERROR: illegal mode");
           System.exit(0);
