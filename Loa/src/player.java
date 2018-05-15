@@ -35,13 +35,13 @@ public class player
     }
     if(side == true)
     {
-    	ACTIVE = StdDraw.RED;
-    	PASSIVE = StdDraw.BOOK_RED;
+    	ACTIVE = StdDraw.LIGHT_GRAY;
+    	PASSIVE = StdDraw.WHITE;
     }
     else
     {
-    	ACTIVE = StdDraw.DARK_GRAY;
-    	PASSIVE = StdDraw.BLACK;
+    	ACTIVE = StdDraw.RED;
+    	PASSIVE = StdDraw.BOOK_RED;
     }
   }
 

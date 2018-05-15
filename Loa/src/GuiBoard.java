@@ -44,7 +44,7 @@ public class GuiBoard extends board{
                 {
                     if(Math.abs(i+j)%2 == 1)
                     {
-                            StdDraw.setPenColor(Color.getHSBColor(26.09f, 31f, 66.27f));
+                            StdDraw.setPenColor(new Color(130, 84, 53));
                             StdDraw.filledSquare(i*10+RADIUS, j*10+RADIUS, RADIUS);
                     }
                     else
@@ -78,12 +78,12 @@ public class GuiBoard extends board{
               {
                 if(tile[i][j].equals("B"))
                 {
-                    StdDraw.setPenColor(StdDraw.BLACK);
+                    StdDraw.setPenColor(StdDraw.BOOK_RED);
                     StdDraw.filledCircle(j*diameter+RADIUS,(size*10)-(i*diameter+RADIUS), RADIUS-0.5);
                 }
                 else if(tile[i][j].equals("W"))
                 {
-                    StdDraw.setPenColor(StdDraw.BOOK_RED);
+                    StdDraw.setPenColor(StdDraw.WHITE);
                     StdDraw.filledCircle(j*diameter+RADIUS,(size*10)-(i*diameter+RADIUS), RADIUS-0.5);
                 }
               }
