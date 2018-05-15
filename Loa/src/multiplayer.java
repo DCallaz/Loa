@@ -7,7 +7,7 @@ public class multiplayer
 {
   private static networking net;
   public static String printColour;
-  public multiplayer(int size, String ip, boolean Gui)
+  public multiplayer(int size, String ip, boolean Gui, int count)
   {
     int mode;
     if (ip.equals("192.168.1.100"))

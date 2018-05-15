@@ -10,7 +10,7 @@ public class single
     
   public static String printColour;
     
-  public single(int size, boolean Gui)
+  public single(int size, boolean Gui, int count)
   {
     int pass = 0;
     //allow for colour choice

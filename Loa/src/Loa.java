@@ -6,6 +6,7 @@ public class Loa
 {
   public static void main(String[] args) {
     boolean exit = false;
+    int count = 0;
     while(exit == false)
     {
         if(args.length < 2)//test for valid amount of inputs
@@ -35,7 +36,7 @@ public class Loa
           break;
 
           case 1:
-            new single(size, false);
+            new single(size, false, count);
           break;
 
           case 2:
@@ -45,17 +46,17 @@ public class Loa
             }
             else{
               String ip = args[2];
-              new multiplayer(size, ip, false);
+              new multiplayer(size, ip, false, count);
             }
           break;
 
           case 3:
-              new single(size, true);
+              new single(size, true, count);
           break;
           
           case 4:
               String ip = args[2];
-              new multiplayer(size, ip, true);
+              new multiplayer(size, ip, true, count);
           break;
         }
         int temp = 0;
