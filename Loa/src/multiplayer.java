@@ -7,7 +7,7 @@ public class multiplayer
 {
   private static networking net;
   public static String printColour;
-  public multiplayer(int size, String ip, boolean Gui, int count)
+  public multiplayer(int size, String ip, boolean Gui, int[] count)
   {
     int mode;
     if (ip.equals("192.168.1.100"))
@@ -18,7 +18,7 @@ public class multiplayer
     {
         mode = networking.connect(ip);
     }
-    switch (mode) 
+    switch (mode)
     {
         case networking.SERVER_MODE:
             System.out.println("(Server mode)");
@@ -84,7 +84,7 @@ public class multiplayer
       for(; end<2; i+=plus, j-=plus, end++)//alternates player to move
       {
         if(checks.pass(p[i], p[j], size, b) == false)//checks if player must pass
-        {  
+        {
             int[][] move = null;
             while(move == null)//loops until valid move
             {
@@ -101,7 +101,7 @@ public class multiplayer
                 {
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
-                    StdDraw.text(7+2*(size-4), size*10+(double)size/2, "Your move "+printColour);
+                    StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Your move "+printColour);
                     StdDraw.show(0);
                     move = checks.GuiMove(size, p[i], p[j], b, true);
                     if(move != null && move[0][0] == -1)
@@ -118,7 +118,7 @@ public class multiplayer
                 {
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
-                    StdDraw.text(7+2*(size-4), size*10+(double)size/2, "Opponents move");
+                    StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Opponents move");
                     StdDraw.show(0);
                 }
                 else
@@ -208,7 +208,7 @@ public class multiplayer
             if(pass == 3)
             {
               if(Gui == false)
-              {  
+              {
                       System.out.println();
                       System.out.println("DRAW");
               }
@@ -222,7 +222,7 @@ public class multiplayer
             if(i == 0)
             {
               if(Gui == false)
-              {  
+              {
                       System.out.println();
                       System.out.println("Player pass");
               }
@@ -234,7 +234,7 @@ public class multiplayer
             else
             {
                     if(Gui == false)
-                {  
+                {
                       System.out.println();
                       System.out.println("Computer pass");
                 }

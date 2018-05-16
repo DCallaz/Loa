@@ -6,7 +6,7 @@ public class Loa
 {
   public static void main(String[] args) {
     boolean exit = false;
-    int count = 0;
+    int[] count = {0, 0};//stores how many times players have won;
     while(exit == false)
     {
         if(args.length < 2)//test for valid amount of inputs
@@ -32,11 +32,11 @@ public class Loa
         switch(mode)
         {
           case 0:
-            new testmode(size);
+            new testmode(size);//start in testmode
           break;
 
           case 1:
-            new single(size, false, count);
+            new single(size, false, count);//start in command-line singleplayer
           break;
 
           case 2:
@@ -46,14 +46,14 @@ public class Loa
             }
             else{
               String ip = args[2];
-              new multiplayer(size, ip, false, count);
+              new multiplayer(size, ip, false, count);//start in command-line multiplayer
             }
           break;
 
           case 3:
               new single(size, true, count);
           break;
-          
+
           case 4:
               String ip = args[2];
               new multiplayer(size, ip, true, count);

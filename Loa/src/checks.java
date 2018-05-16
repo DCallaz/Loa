@@ -11,7 +11,7 @@ public class checks {
 			{
 				return false;
 			}//
-		
+
 			//check row/col jump valid
 			//row counting
 			if(move[0][0] == move[1][0])
@@ -84,7 +84,7 @@ public class checks {
 	    }
 	    return true;
 	  }
-	  
+
 	  public static boolean pass(player pAcc, player pDor,int size,board b)
 	  {
 	    for(int id=0; id<pAcc.getNum(); id++)
@@ -125,7 +125,7 @@ public class checks {
 	    }
 	    return true;
 	  }
-          
+
         public static int[][] GuiMove(int size, player pAcc, player pDor, board b, boolean net)
         {
                int move[][] = new int[2][3];

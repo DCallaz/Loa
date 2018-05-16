@@ -7,17 +7,19 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class single
 {
-    
+
   public static String printColour;
-    
-  public single(int size, boolean Gui, int count)
+  private static int[] count;
+
+  public single(int size, boolean Gui, int[] count)
   {
+    this.count = count;
     int pass = 0;
     //allow for colour choice
     String player = "";
     boolean colour = false;
     if(Gui == false)
-    {  
+    {
   	  System.out.println("Chose a colour: (B or W)");
   	  Scanner sc = new Scanner(System.in);
   	  player = sc.next();
@@ -44,7 +46,7 @@ public class single
     board b;
     if(Gui == false)
     {
-    	b = new board(size, p[0], p[1]);	
+    	b = new board(size, p[0], p[1]);
     }
     else
     {
@@ -52,7 +54,7 @@ public class single
     }
     singleGame(size, colour, p, b, player, pass, Gui);
   }
-  
+
   private static void singleGame(int size, boolean colour, player[] p, board b, String player, int pass, boolean Gui)
   {
     boolean shown = false;//stores if text for move has been shown
@@ -85,14 +87,12 @@ public class single
             }
             else
             {
-                if(shown == false)
-                {
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
-                    StdDraw.text(7+2*(size-4), size*10+(double)size/2, "Your move "+printColour);
+                    StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Your move "+printColour);
+                    StdDraw.text(32+2*(size-4), size*10+(double)size/2, "Score: "+count[0]+" | "+count[1]);
                     StdDraw.show(0);
                     shown = true;
-                }
             	move = checks.GuiMove(size, p[i], p[j], b, false);
             }
           }
@@ -104,7 +104,7 @@ public class single
             }
             move = compmove(size, p[i], p[j], b);//chose and check move
           }
-          
+
           if(i==1 && move != null)
           {
 	         System.out.print(b.toString());//print board
@@ -113,7 +113,8 @@ public class single
                  {
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
-                    StdDraw.text(7+2*(size-4), size*10+(double)size/2, "Opponents move");
+                    StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Opponents move");
+                    StdDraw.text(32+2*(size-4), size*10+(double)size/2, "Score: "+count[0]+" | "+count[1]);
                     StdDraw.show(0);
                  }
 	         //delay output to show that computer moves
@@ -151,17 +152,21 @@ public class single
           //check if landing on opponent
           if(p[j].occupied(move[1][0], move[1][1]) != -1)
           {
-        	//delete opponent piece
+        	//delete opponent pieceif(b.won[1])
+            {
+
+            }
             p[j].delete(p[j].occupied(move[1][0], move[1][1]));
           }
           //
           p[i].move(move);//Implement move
           b.reset();//Reset board to show new move
-          
+
           //check for win
           String winner = b.checkwinner(p, player);
           if(winner != null)
           {
+            count[(b.won[0] == true) ? 0 : 1]++;
             System.out.print(b.toString());//print board
             if(Gui == false)
             {
@@ -182,7 +187,7 @@ public class single
         if(pass == 3)
         {
           if(Gui == false)
-          {  
+          {
         	  System.out.println();
         	  System.out.println("DRAW");
           }
@@ -196,7 +201,7 @@ public class single
         if(i == 0)
         {
     	  if(Gui == false)
-    	  {  
+    	  {
     		  System.out.println();
     		  System.out.println("Player pass");
     	  }
@@ -208,7 +213,7 @@ public class single
         else
         {
         	if(Gui == false)
-            {  
+            {
         	  System.out.println();
           	  System.out.println("Computer pass");
             }

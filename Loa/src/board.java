@@ -4,6 +4,7 @@ public class board
   protected int size;
   protected player p1;
   protected player p2;
+  public static boolean[] won;
   public board(int size, player p1, player p2)
   {
     this.size = size;
@@ -111,7 +112,7 @@ public class board
 
   public String checkwinner(player[] p, String player)
   {
-    boolean[] won = {false, false};
+    won = new boolean[]{false, false};
     for(int i=0; i<2; i++)//loop for both players
     {
       if(p[i].group() == true)
