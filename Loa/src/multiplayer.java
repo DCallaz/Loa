@@ -10,15 +10,15 @@ public class multiplayer
   public multiplayer(int size, String ip, boolean Gui, int[] count)
   {
     int mode;
-    if (ip.equals("192.168.1.100"))
+    if (ip.equals("192.168.1.100"))//if connecting to own computer
     {
-        mode = networking.connect(ip, true);
+        mode = networking.connect(ip, true);//start as admin
     }
-    else
+    else//connecting to opponent computer
     {
         mode = networking.connect(ip);
     }
-    switch (mode)
+    switch (mode)//sending and reciving size for server and client respectively
     {
         case networking.SERVER_MODE:
             System.out.println("(Server mode)");
@@ -41,29 +41,29 @@ public class multiplayer
     boolean endgame = false;
     player[] p = new player[2];
     //assign colour
-    boolean colour = true;
-    String player = "";
-    if(mode == networking.CLIENT_MODE)
-    {
-      colour = false;
-      player = "B";
-    }
-    else if(mode == networking.SERVER_MODE)
-    {
-      colour = true;
-      player = "W";
-    }
-    printColour = (colour == true) ? "(White)" : "(Black)";
+      boolean colour = true;
+      String player = "";
+      if(mode == networking.CLIENT_MODE)
+      {
+        colour = false;
+        player = "B";
+      }
+      else if(mode == networking.SERVER_MODE)
+      {
+        colour = true;
+        player = "W";
+      }
+      printColour = (colour == true) ? "(White)" : "(Black)";
     //
 
-    p[0] = new player(size, colour);
-    p[1] = new player(size, !colour);
+    p[0] = new player(size, colour);//player
+    p[1] = new player(size, !colour);//opponent
     board b;
-    if(Gui)
+    if(Gui)//initialises graphic board
     {
         b = new GuiBoard(size, p[0], p[1]);
     }
-    else
+    else//initialises command-line board
     {
         b = new board(size, p[0], p[1]);
     }
@@ -91,13 +91,13 @@ public class multiplayer
               if(i == 0)//player moving
               {
                 System.out.print(b.toString());//print board
-                if(Gui == false)
+                if(Gui == false)//Read and check move for command-line mode
                 {
                     System.out.println();
                     System.out.println("Your move:");
-                    move = movereader(size, p[i], p[j], b);//Read and check move
+                    move = movereader(size, p[i], p[j], b);
                 }
-                else
+                else//Display score, Read and check move for graphics mode
                 {
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
@@ -126,39 +126,41 @@ public class multiplayer
                     System.out.println();
                     System.out.println("Wait for opponent to move...");
                 }
-                String sMove = networking.read();
-                String[] parts = sMove.split("");
-                move = new int[2][2];
-                if(sMove.equals("QUIT"))
-                {
-                    if(Gui)
-                    {
-                        JOptionPane.showMessageDialog(null, "Opponent has quit");
-                    }
-                    else
-                    {
-                        System.out.println("Opponent has quit");
-                    }
-                    networking.close();
-                    System.exit(0);
-                }
-                else
-                {
-                    for(int x=0; x<2; x++)
-                    {
-                        for(int y=0; y<2; y++)
-                        {
-                            move[x][y] = (int)(parts[(x*2)+y].charAt(0))-(int)('A');
-                            if(y == 0)
-                            {
-                              move[x][y] = (size-1)-move[x][y];
-                            }
-                        }
-                    }
-                }
+                //read move from opponent
+                  String sMove = networking.read();
+                  String[] parts = sMove.split("");
+                  move = new int[2][2];
+                  if(sMove.equals("QUIT"))
+                  {
+                      if(Gui)
+                      {
+                          JOptionPane.showMessageDialog(null, "Opponent has quit");
+                      }
+                      else
+                      {
+                          System.out.println("Opponent has quit");
+                      }
+                      networking.close();
+                      System.exit(0);
+                  }
+                  else
+                  {
+                      for(int x=0; x<2; x++)
+                      {
+                          for(int y=0; y<2; y++)
+                          {
+                              move[x][y] = (int)(parts[(x*2)+y].charAt(0))-(int)('A');
+                              if(y == 0)
+                              {
+                                move[x][y] = (size-1)-move[x][y];
+                              }
+                          }
+                      }
+                  }
+                //
               }
             }
-            if(i == 0)
+            if(i == 0)//sends the players valid move to opponent
             {
                 String temp = "";
                     for(int x=0; x<2; x++)
@@ -207,7 +209,7 @@ public class multiplayer
         {
             if(pass == 3)
             {
-              if(Gui == false)
+              if(Gui == false//for draws
               {
                       System.out.println();
                       System.out.println("DRAW");
@@ -219,7 +221,7 @@ public class multiplayer
               endgame = true;
               i = 3;
             }
-            if(i == 0)
+            if(i == 0)//player pass
             {
               if(Gui == false)
               {
@@ -231,7 +233,7 @@ public class multiplayer
                       JOptionPane.showMessageDialog(null, "Player pass", "Pass", JOptionPane.INFORMATION_MESSAGE);
               }
             }
-            else
+            else//computer pass
             {
                     if(Gui == false)
                 {
@@ -254,37 +256,40 @@ public class multiplayer
   public static int[][] movereader(int size, player pAcc, player pDor, board b)//pAcc: active player | pDor: dormant player
   {
     //read move
-    Scanner sc = new Scanner(System.in);
-    int move[][] = new int[2][3];
-    String input = sc.nextLine();//
+      Scanner sc = new Scanner(System.in);
+      int move[][] = new int[2][3];
+      String input = sc.nextLine();
+    //
     //check quit
-    if(input.equals("QUIT"))
-    {
-      System.out.println("Quitting game");
-      networking.write("QUIT");
-      networking.close();
-      System.exit(0);
-    }//
+      if(input.equals("QUIT"))
+      {
+        System.out.println("Quitting game");
+        networking.write("QUIT");
+        networking.close();
+        System.exit(0);
+      }
+    //
     String place[] = input.split("");  //split up
     //check place exists
-    for(int i=0; i<2; i++)
-    {
-      for(int j=0; j<2; j++)
+      for(int i=0; i<2; i++)
       {
-        move[i][j] = (int)(place[(i*2)+j].charAt(0))-(int)('A');
-        if(j == 0)
+        for(int j=0; j<2; j++)
         {
-          move[i][j] = (size-1)-move[i][j];
-        }
-        if((move[i][j]+1) > size || (move[i][j])<0)
-        {
-          System.out.println("ERROR: invalid move");
-          return null;
+          move[i][j] = (int)(place[(i*2)+j].charAt(0))-(int)('A');
+          if(j == 0)
+          {
+            move[i][j] = (size-1)-move[i][j];
+          }
+          if((move[i][j]+1) > size || (move[i][j])<0)
+          {
+            System.out.println("ERROR: invalid move");
+            return null;
+          }
         }
       }
-    }//
+    //
 
-    if(checks.movecheck(size,pAcc,pDor,b,move) != false)
+    if(checks.movecheck(size,pAcc,pDor,b,move) != false)//check and write move
     {
       networking.write(input);
       return move;

@@ -59,29 +59,31 @@ public class testmode
     int move[][] = new int[2][3];
     String input = sc.next();//
     //check quit
-    if(input.equals("QUIT"))
-    {
-      System.out.println("player quit");
-      System.exit(0);
-    }//
+      if(input.equals("QUIT"))
+      {
+        System.out.println("player quit");
+        System.exit(0);
+      }
+    //
     String place[] = input.split("");  //split up
     //check place exists
-    for(int i=0; i<2; i++)
-    {
-      for(int j=0; j<2; j++)
+      for(int i=0; i<2; i++)
       {
-        move[i][j] = (int)(place[(i*2)+j].charAt(0))-(int)('A');
-        if(j == 0)
+        for(int j=0; j<2; j++)
         {
-          move[i][j] = (size-1)-move[i][j];
-        }
-        if((move[i][j]+1) > size || (move[i][j])<0)
-        {
-          System.out.println("ERROR: invalid move");
-          System.exit(0);
+          move[i][j] = (int)(place[(i*2)+j].charAt(0))-(int)('A');
+          if(j == 0)
+          {
+            move[i][j] = (size-1)-move[i][j];
+          }
+          if((move[i][j]+1) > size || (move[i][j])<0)
+          {
+            System.out.println("ERROR: invalid move");
+            System.exit(0);
+          }
         }
       }
-    }//
+    //
 
     if(checks.movecheck(size,pAcc,pDor,b,move) == true)
     {

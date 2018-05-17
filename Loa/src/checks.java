@@ -90,7 +90,11 @@ public class checks {
 	    for(int id=0; id<pAcc.getNum(); id++)
 	    {
 	      int[][] move = {{pAcc.piece(id)[1],pAcc.piece(id)[0]},{0, 0}};
-	      for(int x=1; x>-1; x--)
+	      for(int x=1; x>-1; x--)if(input.equals("QUIT"))
+      {
+        System.out.println("player quit");
+        System.exit(0);
+      }
 	      {
 	        for(int y=1; y>-1; y--)
 	        {

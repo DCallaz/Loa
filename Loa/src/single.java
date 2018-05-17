@@ -8,51 +8,53 @@ import javax.swing.JOptionPane;
 public class single
 {
 
-  public static String printColour;
-  private static int[] count;
+  public static String printColour;//string to store what colour the player is
+  private static int[] count;//stores players win counter
 
-  public single(int size, boolean Gui, int[] count)
+  public single(int size, boolean Gui, int[] count)//constructor
   {
     this.count = count;
     int pass = 0;
     //allow for colour choice
-    String player = "";
-    boolean colour = false;
-    if(Gui == false)
-    {
-  	  System.out.println("Chose a colour: (B or W)");
-  	  Scanner sc = new Scanner(System.in);
-  	  player = sc.next();
-  	  if(player.equals("B")){colour = false;}
-  	  else if(player.equals("W")){colour = true;}
-    }
-    else
-    {
-  	  int choice = JOptionPane.showOptionDialog(null, "Chose a colour", "Colour choice", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"Black", "White"}, 1);
-  	  if(choice==0){
-  		  colour = false;
-  		  player = "B";
-  	  }
-  	  else {
-  		  colour = true;
-  		  player = "W";
-  	  }
-    }
-    printColour = (colour == true) ? "(White)" : "(Black)";
+      String player = "";//string for command-line colour choice
+      boolean colour = false;//indicates colour (true=white)
+      if(Gui == false)//reads colour choice for command-line mode
+      {
+    	  System.out.println("Chose a colour: (B or W)");
+    	  Scanner sc = new Scanner(System.in);
+    	  player = sc.next();
+    	  if(player.equals("B")){colour = false;}
+    	  else if(player.equals("W")){colour = true;}
+      }
+      else//reads colour choice for graphics mode
+      {
+    	  int choice = JOptionPane.showOptionDialog(null, "Chose a colour",
+        "Colour choice", JOptionPane.DEFAULT_OPTION,
+        JOptionPane.INFORMATION_MESSAGE, null,new Object[]{"Black", "White"},1);
+    	  if(choice==0){
+    		  colour = false;
+    		  player = "B";
+    	  }
+    	  else {
+    		  colour = true;
+    		  player = "W";
+    	  }
+      }
+      printColour = (colour == true) ? "(White)" : "(Black)";
     //
     player[] p = new player[2];
     p[0] = new player(size, colour);//player
     p[1] = new player(size, !colour);//computer
     board b;
-    if(Gui == false)
+    if(Gui == false)//initialises command-line board
     {
     	b = new board(size, p[0], p[1]);
     }
-    else
+    else//initialises graphic board
     {
     	b = new GuiBoard(size, p[0], p[1]);
     }
-    singleGame(size, colour, p, b, player, pass, Gui);
+    singleGame(size, colour, p, b, player, pass, Gui);//starts game loop method
   }
 
   private static void singleGame(int size, boolean colour, player[] p, board b, String player, int pass, boolean Gui)
@@ -66,9 +68,9 @@ public class single
       j=0;
       add=-1;
     }
-    while(endgame == false)
+    while(endgame == false)//loop until game ends
     {
-      for(; Math.abs(i)<2 && Math.abs(j)<2; i+=add, j-=add)
+      for(; Math.abs(i)<2 && Math.abs(j)<2; i+=add, j-=add)//alternate turns
       {
        if(checks.pass(p[i], p[j], size, b) == false)//checks if player must pass
        {
@@ -76,40 +78,40 @@ public class single
         int[][] move = null;
         while(move == null)
         {
-          if(i == 0)
+          if(i == 0)//player to move
           {
             System.out.print(b.toString());//print board
-            if(Gui == false)
+            if(Gui == false)//reads player move for command-line mode
             {
             	System.out.println();
             	System.out.println("Your move:");
             	move = movereader(size, p[i], p[j], b);//Read and check move
             }
-            else
+            else//prints score & reads player move for graphics mode
             {
-                    StdDraw.setPenColor(Color.BLACK);
-                    StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
-                    StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Your move "+printColour);
-                    StdDraw.text(32+2*(size-4), size*10+(double)size/2, "Score: "+count[0]+" | "+count[1]);
-                    StdDraw.show(0);
-                    shown = true;
+              StdDraw.setPenColor(Color.BLACK);
+              StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
+              StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Your move "+printColour);
+              StdDraw.text(32+2*(size-4), size*10+(double)size/2,"Score: "+count[0]+" | "+count[1]);
+              StdDraw.show(0);
+              shown = true;
             	move = checks.GuiMove(size, p[i], p[j], b, false);
             }
           }
-          else
+          else//computer to move
           {
-            if(shown == false)
+            if(shown == false)//restrics the baord from re-showing each inorrect move
             {
               shown = true;
             }
             move = compmove(size, p[i], p[j], b);//chose and check move
           }
 
-          if(i==1 && move != null)
+          if(i==1 && move != null)//if the computer makes a valid move
           {
 	         System.out.print(b.toString());//print board
 	         if(Gui == false) {System.out.println();}
-                 else
+                 else//for graphic mode, show the opponent is "making" a move
                  {
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
@@ -168,12 +170,12 @@ public class single
           {
             count[(b.won[0] == true) ? 0 : 1]++;
             System.out.print(b.toString());//print board
-            if(Gui == false)
+            if(Gui == false)//comman-line mode
             {
             	System.out.println();
             	System.out.println(winner);
             }
-            else
+            else//grapics mode
             {
             	JOptionPane.showMessageDialog(null, winner);
             }
@@ -184,48 +186,48 @@ public class single
        }
        else//pass functionality
        {
-        if(pass == 3)
-        {
-          if(Gui == false)
+          if(pass == 3)//for draws
           {
-        	  System.out.println();
-        	  System.out.println("DRAW");
+              if(Gui == false)
+              {
+            	  System.out.println();
+            	  System.out.println("DRAW");
+              }
+              else
+              {
+            	  JOptionPane.showMessageDialog(null, "DRAW", "Draw", JOptionPane.INFORMATION_MESSAGE);
+              }
+              endgame = true;
+              i = 3;
           }
-          else
+          if(i == 0)//player pass
           {
-        	  JOptionPane.showMessageDialog(null, "DRAW", "Draw", JOptionPane.INFORMATION_MESSAGE);
+          	  if(Gui == false)
+          	  {
+          		  System.out.println();
+          		  System.out.println("Player pass");
+          	  }
+          	  else
+          	  {
+          		  JOptionPane.showMessageDialog(null, "Player pass", "Pass", JOptionPane.INFORMATION_MESSAGE);
+          	  }
           }
-          endgame = true;
-          i = 3;
-        }
-        if(i == 0)
-        {
-    	  if(Gui == false)
-    	  {
-    		  System.out.println();
-    		  System.out.println("Player pass");
-    	  }
-    	  else
-    	  {
-    		  JOptionPane.showMessageDialog(null, "Player pass", "Pass", JOptionPane.INFORMATION_MESSAGE);
-    	  }
-        }
-        else
-        {
-        	if(Gui == false)
-            {
-        	  System.out.println();
-          	  System.out.println("Computer pass");
-            }
-            else
-            {
-          	  JOptionPane.showMessageDialog(null, "Computer pass", "Pass", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-        pass++;
+          else//computer pass
+          {
+              if(Gui == false)
+              {
+          	  System.out.println();
+            	  System.out.println("Computer pass");
+              }
+              else
+              {
+            	  JOptionPane.showMessageDialog(null, "Computer pass", "Pass", JOptionPane.INFORMATION_MESSAGE);
+              }
+          }
+          pass++;
        }
       }
-      if(colour == true)
+      if(colour == true)//reset turn variables
       {
         i=1;
         j=0;

@@ -1,9 +1,9 @@
 import java.awt.Color;
 import java.awt.Font;
 public class GuiBoard extends board{
-	
+
 	public final int RADIUS = 5;
-	
+
 	public GuiBoard(int size, player p1, player p2)
 	{
 		super(size, p1, p2);
@@ -21,11 +21,13 @@ public class GuiBoard extends board{
 	    }
 	    reset();
             double sizeD = size;
-	    StdDraw.setCanvasSize(512, (int)(512*(1+(1/8))));
-	    StdDraw.setXscale(0, size*10);
-	    StdDraw.setYscale(0, size*10+size);
+			//initialise canvas
+		    StdDraw.setCanvasSize(512, (int)(512*(1+(1/8))));
+		    StdDraw.setXscale(0, size*10);
+		    StdDraw.setYscale(0, size*10+size);
+			//
 	}
-	
+
 	public String toString()
 	{
 		//set & reset variables and board

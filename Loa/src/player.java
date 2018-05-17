@@ -9,40 +9,44 @@ public class player
   private Color PASSIVE;
   private boolean on = false;
 
-  public player(int size, boolean side)
+  public player(int size, boolean side)//constructor
   {
     this.side = side;
     number = (size-2)*2;
     pieces = new int[number][2];
     int count =0;
-    for(int i=0; i<=size; i+=size-1)
-    {
-      for(int j=1; j<size-1; j++)
+    //iniitialises pieces at sides
+      for(int i=0; i<=size; i+=size-1)
       {
-        if(side == true)//for white
+        for(int j=1; j<size-1; j++)
         {
-          pieces[count][0] = i;
-          pieces[count][1] = j;
-          count++;
-        }
-        else//for black
-        {
-          pieces[count][0] = j;
-          pieces[count][1] = i;
-          count++;
+          if(side == true)//for white
+          {
+            pieces[count][0] = i;
+            pieces[count][1] = j;
+            count++;
+          }
+          else//for black
+          {
+            pieces[count][0] = j;
+            pieces[count][1] = i;
+            count++;
+          }
         }
       }
-    }
-    if(side == true)
-    {
-    	ACTIVE = StdDraw.LIGHT_GRAY;
-    	PASSIVE = StdDraw.WHITE;
-    }
-    else
-    {
-    	ACTIVE = StdDraw.RED;
-    	PASSIVE = StdDraw.BOOK_RED;
-    }
+    //
+    //initialise active colours
+      if(side == true)
+      {
+      	ACTIVE = StdDraw.LIGHT_GRAY;
+      	PASSIVE = StdDraw.WHITE;
+      }
+      else
+      {
+      	ACTIVE = StdDraw.RED;
+      	PASSIVE = StdDraw.BOOK_RED;
+      }
+   //
   }
 
   public int getNum()//returns the number of pieces
@@ -88,8 +92,8 @@ public class player
     }
     number--;
   }
-  
-  public void toggleColour()
+
+  public void toggleColour()//sets active colour
   {
 	  if(on == false)
 	  {
