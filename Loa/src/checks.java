@@ -7,53 +7,59 @@ public class checks {
 	          int[][] move)
 		{
 			//check place & jump valid
-			if((pAcc.occupied(move[0][0],move[0][1])==-1) || jumpOpp(move, pDor)==false || (pAcc.occupied(move[1][0], move[1][1])!=-1))
-			{
-				return false;
-			}//
+				if((pAcc.occupied(move[0][0],move[0][1])==-1) || jumpOpp(move, pDor)==false || (pAcc.occupied(move[1][0], move[1][1])!=-1))
+				{
+					return false;
+				}
+			//
 
 			//check row/col jump valid
-			//row counting
-			if(move[0][0] == move[1][0])
-			{
-				int row = b.rcCount(0, move[0][0], pAcc, pDor);
-				if(Math.abs(move[0][1]-move[1][1]) != row)
-				{
-					return false;
-				}
-			}//
+				//row counting
+					if(move[0][0] == move[1][0])
+					{
+						int row = b.rcCount(0, move[0][0], pAcc, pDor);
+						if(Math.abs(move[0][1]-move[1][1]) != row)
+						{
+							return false;
+						}
+					}
+				//
 			//column counting
-			else if(move[0][1] == move[1][1])
-			{
-				int col = b.rcCount(1, move[0][1], pAcc, pDor);
-				if(Math.abs(move[0][0]-move[1][0]) != col)
+				else if(move[0][1] == move[1][1])
 				{
-					return false;
+					int col = b.rcCount(1, move[0][1], pAcc, pDor);
+					if(Math.abs(move[0][0]-move[1][0]) != col)
+					{
+						return false;
+					}
 				}
-			}//
+			//
 			//positive diagonal counting
-			else if(move[1][0]-move[0][0] == -(move[1][1]-move[0][1]))
-			{
-				int diag = b.diagCount(0, move[0][0], move[0][1], pAcc, pDor);
-				if(Math.abs(move[1][0]-move[0][0]) != diag)
+				else if(move[1][0]-move[0][0] == -(move[1][1]-move[0][1]))
 				{
-					return false;
+					int diag = b.diagCount(0, move[0][0], move[0][1], pAcc, pDor);
+					if(Math.abs(move[1][0]-move[0][0]) != diag)
+					{
+						return false;
+					}
 				}
-			}//
+			//
 			//negative diagonal counting
-			else if(move[1][0]-move[0][0] == move[1][1]-move[0][1])
-			{
-				int diag = b.diagCount(1, move[0][0], move[0][1], pAcc, pDor);
-				if(Math.abs(move[1][0]-move[0][0]) != diag)
+				else if(move[1][0]-move[0][0] == move[1][1]-move[0][1])
+				{
+					int diag = b.diagCount(1, move[0][0], move[0][1], pAcc, pDor);
+					if(Math.abs(move[1][0]-move[0][0]) != diag)
+					{
+						return false;
+					}
+				}
+			//
+			//not moving in valid line
+				else
 				{
 					return false;
 				}
-			}//
-			//not moving in valid line
-			else
-			{
-				return false;
-			}//
+			//
 			return true;//if valid move, return true
 		}
 
