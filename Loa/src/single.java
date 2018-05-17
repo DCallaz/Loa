@@ -92,7 +92,7 @@ public class single
               StdDraw.setPenColor(Color.BLACK);
               StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
               StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Your move "+printColour);
-              StdDraw.text(32+2*(size-4), size*10+(double)size/2,"Score: "+count[0]+" | "+count[1]);
+              StdDraw.text(7*size, size*10+(double)size/2,"Score: "+count[0]+" | "+count[1]);
               StdDraw.show(0);
               shown = true;
             	move = checks.GuiMove(size, p[i], p[j], b, false);
