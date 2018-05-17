@@ -1,11 +1,13 @@
 public class board
 {
-  protected Object[][] tile;
-  protected int size;
-  protected player p1;
-  protected player p2;
-  public static boolean[] won;
-  public board(int size, player p1, player p2)
+  //initialise all variables for board and child classes
+    protected Object[][] tile;
+    protected int size;
+    protected player p1;
+    protected player p2;
+    public static boolean[] won;
+  //
+  public board(int size, player p1, player p2)//constructor
   {
     this.size = size;
     tile = new Object[size][size];
@@ -22,7 +24,7 @@ public class board
     reset();
   }
 
-  public void reset()
+  public void reset()//redraws board tiles with player pieces
   {
     for(int i=0; i<size; i++)
     {
@@ -54,34 +56,40 @@ public class board
     return tile[x][y];
   }
 
-  public int rcCount(int rc, int letter, player p1, player p2)//rc = 0 for row, = 1 for col
+  /*  count the number of pieces in row or column
+      rc = 0 for row, = 1 for col
+  */
+  public int rcCount(int rc, int letter, player p1, player p2)
   {
     int count = 0;
     for(int i=0; i<size; i++)
     {
-      if(rc == 0)
-      {
-        if(p1.occupied(letter, i) != -1 || p2.occupied(letter, i) != -1)
+        if(rc == 0)
         {
-          count++;
+            if(p1.occupied(letter, i) != -1 || p2.occupied(letter, i) != -1)
+            {
+              count++;
+            }
         }
-      }
-      else
-      {
-        if(p1.occupied(i, letter) != -1 || p2.occupied(i, letter) != -1)
+        else
         {
-          count++;
+            if(p1.occupied(i, letter) != -1 || p2.occupied(i, letter) != -1)
+            {
+              count++;
+            }
         }
-      }
     }
     return count;
   }
 
-  public int diagCount(int pn, int row, int col, player p1, player p2)//pn =0 for pos,=1 for neg
+  /*  count the number of pieces in a diagonal
+      pn =0 for positive diag.,=1 for negetive diag.
+  */
+  public int diagCount(int pn, int row, int col, player p1, player p2)
   {
     row = (size-1)-row;
     int count = 0;
-    //getting first diagonal
+    //getting first tile of diagonal
       int max = (-size+1)*(pn)+size;
         while(row != (size-1) && col != (max-1))
         {
@@ -93,7 +101,7 @@ public class board
     //
 
     //counting
-    max = (size-1)*(pn-1)+size;
+      max = (size-1)*(pn-1)+size;
       while(row != 1 && col != max)
       {
         if(p1.occupied(size-row, col-1) != -1 || p2.occupied(size-row, col-1) != -1)
@@ -107,55 +115,58 @@ public class board
       {
         count++;
       }
+    //
       return count;
   }
 
-  public String checkwinner(player[] p, String player)
+  public String checkwinner(player[] p, String player)//checks if a player has won
   {
-    won = new boolean[]{false, false};
-    for(int i=0; i<2; i++)//loop for both players
-    {
-      if(p[i].group() == true)
+      won = new boolean[]{false, false};
+      for(int i=0; i<2; i++)//loop for both players
       {
-        won[i] = true;
+          if(p[i].group() == true)
+          {
+            won[i] = true;
+          }
       }
-    }
-    if(won[0] == true && won[1] == true)
-    {
-      return "DRAW";
-    }
-    else if(won[0] == true)
-    {
-      if(player.equals("B"))
+      if(won[0] == true && won[1] == true)
       {
-        return "WINNER: black";
+        return "DRAW";
+      }
+      else if(won[0] == true)
+      {
+          if(player.equals("B"))
+          {
+            return "WINNER: black";
+          }
+          else
+          {
+            return "WINNER: white";
+          }
+      }
+      else if(won[1] == true)
+      {
+          if(player.equals("B"))
+          {
+            return "WINNER: white";
+          }
+          else
+          {
+            return "WINNER: black";
+          }
       }
       else
       {
-        return "WINNER: white";
+        return null;
       }
-    }
-    else if(won[1] == true)
-    {
-      if(player.equals("B"))
-      {
-        return "WINNER: white";
-      }
-      else
-      {
-        return "WINNER: black";
-      }
-    }
-    else
-    {
-      return null;
-    }
   }
 
+  //method to print out the board
   @Override
   public String toString()
   {
     String temp = "  ";
+    //printing top board headers
     for(char c = 'A'; c != (char)((int)('A')+size); c = (char)((int)(c)+1))
     {
       temp += c+" ";
@@ -165,7 +176,7 @@ public class board
     {
       for(int j=-1;j<size; j++)
       {
-        if(j == -1)
+        if(j == -1)//printing side board headers
         {
           temp += (char)(('A')+size-1-i)+" ";
         }

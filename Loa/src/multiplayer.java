@@ -209,7 +209,7 @@ public class multiplayer
         {
             if(pass == 3)
             {
-              if(Gui == false//for draws
+              if(Gui == false)//for draws
               {
                       System.out.println();
                       System.out.println("DRAW");

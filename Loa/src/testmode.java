@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class testmode
 {
-  public testmode(int size)
+  public testmode(int size)//constructor
   {
     boolean endgame = false;
     int pass = 0;
