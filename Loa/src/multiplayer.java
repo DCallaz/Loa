@@ -2,13 +2,29 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Scanner;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 public class multiplayer
 {
-  private static networking net;
   public static String printColour;
+  public int size;
   public multiplayer(int size, String ip, boolean Gui, int[] count)
   {
+    this.size = size;
+    //waiting dialog initialiser
+        JFrame frame = new JFrame();
+        if(Gui)
+        {
+            ImageIcon ico = new ImageIcon("loading.png");
+            JLabel l = new JLabel("Waiting for opponent...", ico, JLabel.CENTER);
+            frame.add(l);
+            frame.pack();
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+    //
     int mode;
     if (ip.equals("192.168.1.100"))//if connecting to own computer
     {
@@ -18,6 +34,8 @@ public class multiplayer
     {
         mode = networking.connect(ip);
     }
+    
+    frame.dispose();//close waiting dialog
     switch (mode)//sending and reciving size for server and client respectively
     {
         case networking.SERVER_MODE:
@@ -102,6 +120,7 @@ public class multiplayer
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
                     StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Your move "+printColour);
+                    StdDraw.text(7*size, size*10+(double)size/2,"Score: "+count[0]+" | "+count[1]);
                     StdDraw.show(0);
                     move = checks.GuiMove(size, p[i], p[j], b, true);
                     if(move != null && move[0][0] == -1)
@@ -119,6 +138,7 @@ public class multiplayer
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
                     StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Opponents move");
+                    StdDraw.text(7*size, size*10+(double)size/2,"Score: "+count[0]+" | "+count[1]);
                     StdDraw.show(0);
                 }
                 else
@@ -191,6 +211,7 @@ public class multiplayer
               String winner = b.checkwinner(p, player);
               if(winner != null)
               {
+                  count[(b.won[0] == true) ? 0 : 1]++;
                   System.out.print(b.toString());//print board
                   if(Gui)
                   {
@@ -201,8 +222,13 @@ public class multiplayer
                       System.out.println();
                     System.out.println(winner);
                   }
+                  networking.close();//closes connection
                   endgame= true;
-                  System.exit(0);
+                  end = 3;
+                  if(ip.equals("192.168.10.0"))//exits for local multiplayer
+                  {
+                      System.exit(0);
+                  }
               }
         }
         else//pass functionality
@@ -252,7 +278,7 @@ public class multiplayer
 
     }
   }
-
+  
   public static int[][] movereader(int size, player pAcc, player pDor, board b)//pAcc: active player | pDor: dormant player
   {
     //read move

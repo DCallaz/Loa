@@ -116,7 +116,7 @@ public class single
                     StdDraw.setPenColor(Color.BLACK);
                     StdDraw.setFont(new Font(Font.SANS_SERIF, Font.ITALIC+ Font.BOLD, 20));
                     StdDraw.text(9+2*(size-4), size*10+(double)size/2, "Opponents move");
-                    StdDraw.text(32+2*(size-4), size*10+(double)size/2, "Score: "+count[0]+" | "+count[1]);
+                    StdDraw.text(7*size, size*10+(double)size/2,"Score: "+count[0]+" | "+count[1]);
                     StdDraw.show(0);
                  }
 	         //delay output to show that computer moves
